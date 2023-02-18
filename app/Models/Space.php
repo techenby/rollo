@@ -8,4 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Space extends Model
 {
     use HasFactory;
+
+    protected $guarded = [];
+
+    public function activities()
+    {
+        return $this->hasMany(Activity::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

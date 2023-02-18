@@ -8,18 +8,18 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('activities', function (Blueprint $table) {
+        Schema::create('blocks', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('space_id')->constrained('spaces');
-            $table->string('title');
-            $table->string('color');
+            $table->foreignId('activity_id')->constrained('activities');
+            $table->dateTime('start');
+            $table->dateTime('end')->nullable();
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('activities');
+        Schema::dropIfExists('blocks');
     }
 };

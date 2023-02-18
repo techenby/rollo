@@ -1,15 +1,65 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+<x-slot name="header">
+    <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        {{ __('Dashboard') }}
+    </h2>
+</x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
-                <x-welcome />
-            </div>
-        </div>
+<x-container class="grid grid-cols-4 gap-8">
+    <div>
+        <x-card x-data>
+            <ul class="divide-y divide-gray-100 dark:divide-gray-700">
+                @foreach($spaces as $space)
+                <li wire:key="space-{{ $space->id }}" x-disclosure>
+                    <button type="button" class="group px-3 py-2 w-full flex items-center justify-between" x-disclosure:button>
+                        <span class="space-x-2 text-gray-900 dark:text-gray-200">
+                            <span>{{ $space->icon }}</span>
+                            <span>{{ $space->title }}</span>
+                        </span>
+                        <div class="collapse group-hover:visible space-x-2 flex shrink-0 text-gray-500 dark:text-gray-400">
+                            <div>
+                                <x-heroicon-o-chevron-up x-show="$disclosure.isOpen" class="w-4 h-4" />
+                                <x-heroicon-o-chevron-down x-show="! $disclosure.isOpen" class="w-4 h-4" />
+                            </div>
+                            <div>
+                                <x-heroicon-o-pencil class="w-4 h-4" />
+                            </div>
+                        </div>
+                    </button>
+
+                    <ul wire:key="space-{{ $space->id }}-activities" x-disclosure:panel x-collapse>
+                        @foreach($space->activities as $activity)
+                        <li wire:key="activity-{{ $activity->id }}" class="group flex items-center space-x-2 justify-between px-3 py-2">
+                            <button type="button" wire:click="$emit('start', {{ $activity->id }})" class="flex space-x-2 items-center">
+                                <div class="w-5 h-5 rounded-full flex items-center justify-center" style="background-color: {{ $activity->color }}">
+                                    <x-heroicon-o-play class="w-5 h-5 collapse group-hover:visible" />
+                                </div>
+                                <div class="text-gray-900 dark:text-gray-200">{{ $activity->title }}</div>
+                            </button>
+                            <button type="button" wire:click="$emit('editActivity', {{ $activity->id }})" class="collapse group-hover:visible text-gray-500 dark:text-gray-400">
+                                <x-heroicon-o-pencil class="w-4 h-4" />
+                            </button>
+                        </li>
+                        @endforeach
+                        <li wire:key="space-{{ $space->id }}-activities-create">
+                            <livewire:activities.create :space=$space wire:key="space-{{ $space->id }}-activities-create-lw" />
+                        </li>
+                    </ul>
+                </li>
+
+                @endforeach
+                <li wire:key="spaces-create">
+                    <livewire:spaces.create />
+                </li>
+            </ul>
+        </x-card>
     </div>
-</x-app-layout>
+
+    <div class="col-span-3">
+        <x-card>
+            <div id="calendar" wire:ignore>
+
+            </div>
+        </x-card>
+        <livewire:blocks.table />
+    </div>
+</x-container>
