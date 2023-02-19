@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Spaces;
 
+use App\Forms\Components\EmojiPicker;
 use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -31,7 +32,7 @@ class Create extends Component implements HasForms
     {
         return [
             TextInput::make('title')->required(),
-            TextInput::make('icon')->required(),
+            EmojiPicker::make('icon')->required(),
         ];
     }
 
