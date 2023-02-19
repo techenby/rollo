@@ -30,7 +30,8 @@ const calendar = new Calendar(document.getElementById('calendar'), {
         right: 'timeGridWeek'
     },
     firstDay: 1,
-    slotDuration: '00:15:00'
+    slotDuration: '00:15:00',
+    scrollTime: '08:00:00'
 })
 calendar.render();
 
