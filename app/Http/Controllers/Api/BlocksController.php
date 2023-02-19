@@ -4,15 +4,13 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BlockResource;
+use App\Models\Activity;
 use App\Models\Block;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class BlocksController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $blocks = auth()->user()->blocks()
@@ -26,36 +24,27 @@ class BlocksController extends Controller
         return BlockResource::collection($blocks);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request): Response
+    public function store(Request $request)
     {
-        dd($request->all());
-        // stop previous block (if any)
-        // start new block
+        $activity = Activity::findOrFail($request->get('activity_id'));
+        Block::start($activity);
+
+        return response(status: 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Block $block): Response
+    public function show(Block $block)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Block $block): Response
+    public function update(Block $block, string $method = null)
     {
-        //
+        if ($method === 'stop') {
+            $block->stop();
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Block $block): Response
+    public function destroy(Block $block)
     {
         //
     }

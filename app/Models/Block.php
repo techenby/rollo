@@ -12,6 +12,8 @@ class Block extends Model
 
     protected $guarded = [];
 
+    protected $appends = ['duration'];
+
     protected $casts = [
         'start' => 'datetime',
         'end' => 'datetime',

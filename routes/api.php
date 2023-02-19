@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\ActivitiesController;
 use App\Http\Controllers\Api\BlocksController;
+use App\Http\Controllers\Api\SpacesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,8 +17,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/blocks', [BlocksController::class, 'index']);
-
 Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/activities/current', [ActivitiesController::class, 'show']);
+
+    Route::get('/blocks', [BlocksController::class, 'index']);
     Route::post('/blocks', [BlocksController::class, 'store']);
+    Route::patch('/blocks/{block}/{method?}', [BlocksController::class, 'update']);
+
+    Route::get('/spaces', [SpacesController::class, 'index']);
 });

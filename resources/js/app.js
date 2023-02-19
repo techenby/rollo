@@ -18,22 +18,24 @@ Alpine.plugin(FormsAlpinePlugin)
 Alpine.plugin(NotificationsAlpinePlugin)
 Alpine.plugin(EmojiPickerFormComponentAlpinePlugin)
 
-const calendar = new Calendar(document.getElementById('calendar'), {
-    plugins: [timeGridPlugin],
-    initialView: 'timeGridWeek',
-    events: {
-        url: '/api/blocks',
-    },
-    headerToolbar: {
-        left: 'prev,next',
-        center: 'title',
-        right: 'timeGridWeek'
-    },
-    firstDay: 1,
-    slotDuration: '00:15:00',
-    scrollTime: '08:00:00'
-})
-calendar.render();
+if (document.getElementById('calendar')) {
+    const calendar = new Calendar(document.getElementById('calendar'), {
+        plugins: [timeGridPlugin],
+        initialView: 'timeGridWeek',
+        events: {
+            url: '/api/blocks',
+        },
+        headerToolbar: {
+            left: 'prev,next',
+            center: 'title',
+            right: 'timeGridWeek'
+        },
+        firstDay: 1,
+        slotDuration: '00:15:00',
+        scrollTime: '08:00:00'
+    })
+    calendar.render();
+}
 
 
 Alpine.start();
