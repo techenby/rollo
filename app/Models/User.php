@@ -49,6 +49,11 @@ class User extends Authenticatable
         return $this->hasMany(Block::class);
     }
 
+    public function currentBlock()
+    {
+        return $this->hasOne(Block::class)->whereNull('end');
+    }
+
     public function spaces()
     {
         return $this->hasMany(Space::class);

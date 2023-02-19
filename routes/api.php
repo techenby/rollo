@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/blocks', [BlocksController::class, 'index']);
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/blocks', [BlocksController::class, 'store']);
 });

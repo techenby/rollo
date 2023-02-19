@@ -8,13 +8,22 @@ use Livewire\Component;
 
 class Dashboard extends Component
 {
-    protected $listeners = ['refresh' => '$refresh', 'start'];
+    protected $listeners = [
+        'refresh' => '$refresh',
+        'start',
+    ];
 
     public function render()
     {
         return view('dashboard', [
+            'currentBlock' => $this->currentBlock,
             'spaces' => $this->spaces,
         ]);
+    }
+
+    public function getCurrentBlockProperty()
+    {
+        return auth()->user()->currentBlock;
     }
 
     public function getSpacesProperty()
@@ -25,5 +34,12 @@ class Dashboard extends Component
     public function start(Activity $activity)
     {
         Block::start($activity);
+    }
+
+    public function stop()
+    {
+        $this->currentBlock->stop();
+
+        $this->emit('refresh');
     }
 }

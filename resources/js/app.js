@@ -19,11 +19,16 @@ Alpine.plugin(NotificationsAlpinePlugin)
 const calendar = new Calendar(document.getElementById('calendar'), {
     plugins: [timeGridPlugin],
     initialView: 'timeGridWeek',
+    events: {
+        url: '/api/blocks',
+    },
     headerToolbar: {
         left: 'prev,next',
         center: 'title',
         right: 'timeGridWeek'
-    }
+    },
+    firstDay: 1,
+    slotDuration: '00:15:00'
 })
 calendar.render();
 

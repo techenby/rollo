@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\BlockResource;
 use App\Models\Block;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -12,9 +13,17 @@ class BlocksController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): Response
+    public function index()
     {
-        //
+        $blocks = auth()->user()->blocks()
+            ->whereDate('start', '>=', request('start'))
+            ->where(function ($query) {
+                $query->whereDate('end',   '<=', request('end'))
+                    ->orWhereNull('end');
+            })
+            ->get();
+
+        return BlockResource::collection($blocks);
     }
 
     /**

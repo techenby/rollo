@@ -5,7 +5,7 @@
 </x-slot>
 
 <x-container class="grid grid-cols-4 gap-8">
-    <div>
+    <div class="space-y-4">
         <x-card x-data>
             <ul class="divide-y divide-gray-100 dark:divide-gray-700">
                 @foreach($spaces as $space)
@@ -52,14 +52,27 @@
                 </li>
             </ul>
         </x-card>
+
+        @if ($currentBlock)
+        <x-card class="p-6 flex items-center justify-between" style="background: {{ $currentBlock->activity->color }}">
+            <span>{{ $currentBlock->activity->space->icon }} {{ $currentBlock->activity->title }}</span>
+            <div class="flex items-center justify-between space-x-2">
+                <span>{{ $currentBlock->duration }}</span>
+                <button wire:click="stop">
+                    <x-heroicon-o-stop class="w-4 h-4" />
+                </button>
+            </div>
+        </x-card>
+        @endif
     </div>
 
-    <div class="col-span-3">
-        <x-card>
+    <div class="col-span-3 space-y-4">
+        <x-card class="p-2">
             <div id="calendar" wire:ignore>
 
             </div>
         </x-card>
+
         <livewire:blocks.table />
     </div>
 </x-container>
