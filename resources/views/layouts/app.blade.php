@@ -29,7 +29,9 @@
 <body class="font-sans antialiased min-h-screen bg-gray-100 dark:bg-gray-900">
     <x-banner />
 
+    @auth
     @livewire('navigation-menu')
+    @endauth
 
     <!-- Page Heading -->
     @if (isset($header))
