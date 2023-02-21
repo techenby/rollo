@@ -24,17 +24,44 @@ class Table extends Component implements HasTable
     protected function getTableColumns(): array
     {
         return [
-            ColorColumn::make('activity.color'),
+            ColorColumn::make('activity.color')
+                ->searchable()
+                ->sortable(),
             TextColumn::make('activity.title')
-                ->formatStateUsing(fn ($record) => $record->activity->space->icon . ' ' . $record->activity->title),
-            TextColumn::make('duration'),
-            TextColumn::make('start')->dateTime(),
-            TextColumn::make('end')->dateTime(),
+                ->formatStateUsing(fn ($record) => $record->activity->space->icon . ' ' . $record->activity->title)
+                ->searchable()
+                ->sortable(),
+            TextColumn::make('duration')
+                ->searchable()
+                ->sortable(),
+            TextColumn::make('start')
+                ->dateTime()
+                ->searchable()
+                ->sortable(),
+            TextColumn::make('end')
+                ->dateTime()
+                ->searchable()
+                ->sortable(),
         ];
     }
 
     protected function getTableQuery(): Builder
     {
         return Block::where('user_id', auth()->id())->with('activity.space');
+    }
+
+    protected function getTablePollingInterval(): ?string
+    {
+        return '10s';
+    }
+
+    protected function getDefaultTableSortColumn(): ?string
+    {
+        return 'end';
+    }
+
+    protected function getDefaultTableSortDirection(): ?string
+    {
+        return 'asc';
     }
 }
