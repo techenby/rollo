@@ -9,6 +9,7 @@ Timeular but better
 ## To-Do
 - [ ] Reorder Spaces
 - [ ] Edit previous blocks
+- [ ] Add old blocks
 - [ ] Dashboard widget for raspberry pi
 - [ ] Phone app
 - [ ] Sort dashboard table by end by default
@@ -22,3 +23,4 @@ Timeular but better
 - [ ] Clear form after creating activity
 - [ ] Edit space
 - [ ] Edit activity
+- [ ] Add emoji font to PI?
