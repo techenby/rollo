@@ -34,5 +34,5 @@ Timeular but better
 - [ ] Table better header so no duplicated "Activity"
 - [ ] Add API documentation (maybe use Scribe)
 - [ ] Integrate Calendar events (for Andrew) to compare actual time spent w/ planned
-- [ ] NFC Stickers or Gyrometer
+- [ ] NFC Stickers or Gyrometer (maybe tap when you leave room and tap when leave, put NFC right next to switch)
 - [ ] Computer goes to sleep stop computer task
