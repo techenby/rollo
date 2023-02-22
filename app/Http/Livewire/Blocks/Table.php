@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Blocks;
 
-use App\Models\Activity;
 use App\Models\Block;
 use Filament\Tables\Columns\ColorColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -14,7 +13,8 @@ use Livewire\Component;
 class Table extends Component implements HasTable
 {
     use InteractsWithTable;
-    public $view = 'table';
+
+    public $timezone;
 
     public function render()
     {
@@ -35,11 +35,11 @@ class Table extends Component implements HasTable
                 ->searchable()
                 ->sortable(),
             TextColumn::make('start')
-                ->dateTime()
+                ->formatStateUsing(fn ($record) => $record->start->timezone($this->timezone)->format('M d, Y h:i a'))
                 ->searchable()
                 ->sortable(),
             TextColumn::make('end')
-                ->dateTime()
+                ->formatStateUsing(fn ($record) => $record->end->timezone($this->timezone)->format('M d, Y h:i a'))
                 ->searchable()
                 ->sortable(),
         ];
