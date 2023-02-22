@@ -38,7 +38,7 @@ class Block extends Model
 
     public function getDurationAttribute()
     {
-        return $this->start->diffForHumans($this->end ?? now(), CarbonInterface::DIFF_ABSOLUTE);
+        return $this->interval->format("%H:%I:%S");
     }
 
     public function getIntervalAttribute()
