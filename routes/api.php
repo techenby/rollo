@@ -22,7 +22,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/blocks', [BlocksController::class, 'index']);
     Route::post('/blocks', [BlocksController::class, 'store']);
-    Route::patch('/blocks/{block}/{method?}', [BlocksController::class, 'update']);
+    Route::patch('/blocks/{block}/stop', [BlocksController::class, 'update']);
+    Route::patch('/blocks/{block}', [BlocksController::class, 'update']);
 
     Route::get('/spaces', [SpacesController::class, 'index']);
 });
