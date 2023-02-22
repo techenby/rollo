@@ -60,10 +60,9 @@ class Dashboard extends Component
                         'activity' => $collection->first()->activity,
                         'duration' => $final->diff($dt)->format("%H:%I:%S"),
                     ];
-                });
+                })
+                ->sortByDesc('duration');
         }
-
-        return [];
     }
 
     public function start(Activity $activity)

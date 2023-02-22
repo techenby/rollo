@@ -6,6 +6,7 @@ Timeular but better
 - [x] API for blocks
 - [x] Fill in Calendar
 - [x] Dashboard widget for raspberry pi
+- [x] Add totals for day
 
 ## To-Do
 - [ ] Reorder Spaces
