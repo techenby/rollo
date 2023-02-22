@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Activity;
 use App\Models\Block;
+use DateTime;
 use Livewire\Component;
 
 class Dashboard extends Component
@@ -13,11 +14,14 @@ class Dashboard extends Component
         'start',
     ];
 
+    public $timezone;
+
     public function render()
     {
         return view('dashboard', [
             'currentBlock' => $this->currentBlock,
             'spaces' => $this->spaces,
+            'today' => $this->today,
         ]);
     }
 
@@ -29,6 +33,37 @@ class Dashboard extends Component
     public function getSpacesProperty()
     {
         return auth()->user()->spaces->load('activities');
+    }
+
+    public function getTodayProperty()
+    {
+        if ($this->timezone) {
+            $startOfDay = now()->timezone($this->timezone)->startOfDay()->timezone('UTC');
+            $endOfDay = now()->timezone($this->timezone)->endOfDay()->timezone('UTC');
+
+            return Block::where('user_id', auth()->id())
+                ->where('start', '>=', $startOfDay) // won't count ones that started yesterday
+                ->where('end', '<=', $endOfDay) // won't count ones that are ongoing
+                ->with('activity')
+                ->get()
+                ->append('interval')
+                ->groupBy('activity_id')
+                ->map(function ($collection) {
+                    $dt = new DateTime('00:00');
+                    $final = clone $dt;
+
+                    foreach($collection as $block) {
+                        $dt->add($block->interval);
+                    }
+
+                    return [
+                        'activity' => $collection->first()->activity,
+                        'duration' => $final->diff($dt)->format("%H:%I:%S"),
+                    ];
+                });
+        }
+
+        return [];
     }
 
     public function start(Activity $activity)

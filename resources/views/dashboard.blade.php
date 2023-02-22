@@ -64,6 +64,24 @@
             </div>
         </x-card>
         @endif
+
+        <div x-data="{ timezone: @entangle('timezone') }" x-init="timezone = Intl.DateTimeFormat().resolvedOptions().timeZone">
+            @if ($timezone)
+            <x-card>
+                <ul class="divide-y divide-gray-100 dark:divide-gray-700">
+                    @foreach($today as $item)
+                    <li wire:key="duration-{{ $item['activity']->id }}" class="px-3 py-2 flex items-center justify-between space-x-2">
+                        <div class="flex items-center space-x-2">
+                            <span class="w-5 h-5 rounded-full" style="background-color: {{ $item['activity']->color }}"></span>
+                            <span>{{ $item['activity']->title }}</span>
+                        </div>
+                        <span>{{ $item['duration'] }}</span>
+                    </li>
+                    @endforeach
+                </ul>
+            </x-card>
+            @endif
+        </div>
     </div>
 
     <div class="col-span-3 space-y-4">

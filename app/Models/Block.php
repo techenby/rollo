@@ -41,6 +41,11 @@ class Block extends Model
         return $this->start->diffForHumans($this->end ?? now(), CarbonInterface::DIFF_ABSOLUTE);
     }
 
+    public function getIntervalAttribute()
+    {
+        return $this->start->diff($this->end ?? now());
+    }
+
     public function scopeCurrentlyRunningFor($query, User $user)
     {
         return $query->where('user_id', $user->id)->whereNull('end');
