@@ -39,7 +39,7 @@ class Table extends Component implements HasTable
                 ->searchable()
                 ->sortable(),
             TextColumn::make('end')
-                ->formatStateUsing(fn ($record) => $record->end->timezone($this->timezone)->format('M d, Y h:i a'))
+                ->formatStateUsing(fn ($record) => $record->end ? $record->end->timezone($this->timezone)->format('M d, Y h:i a') : null)
                 ->searchable()
                 ->sortable(),
         ];
