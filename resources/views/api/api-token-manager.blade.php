@@ -92,6 +92,26 @@
             </x-action-section>
         </div>
     @endif
+    <x-section-border />
+
+    <!-- API Documentation -->
+    <div class="mt-10 sm:mt-0">
+        <x-action-section>
+            <x-slot name="title">
+                {{ __('API Documentation') }}
+            </x-slot>
+
+            <x-slot name="description">
+                {{ __('View the documentation so you can implement your own integration for Rollo.') }}
+            </x-slot>
+
+            <x-slot name="content">
+                <div class="space-y-6">
+                    <x-button href="/docs">Documentation</x-button>
+                </div>
+            </x-slot>
+        </x-action-section>
+    </div>
 
     <!-- Token Value Modal -->
     <x-dialog-modal wire:model="displayingToken">
