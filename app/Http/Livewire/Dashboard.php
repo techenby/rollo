@@ -43,7 +43,10 @@ class Dashboard extends Component
 
             return Block::where('user_id', auth()->id())
                 ->where('start', '>=', $startOfDay) // won't count ones that started yesterday
-                ->where('end', '<=', $endOfDay) // won't count ones that are ongoing
+                ->where(function ($query) use ($endOfDay) {
+                    $query->where('end', '<=', $endOfDay)
+                        ->orWhereNull('end');
+                })
                 ->with('activity')
                 ->get()
                 ->append('interval')
