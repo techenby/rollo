@@ -80,6 +80,12 @@
                     @endforeach
                 </ul>
             </x-card>
+            <x-card class="p-6 flex items-center justify-between">
+                <span>OCALI</span>
+                <div class="flex items-center justify-between space-x-2">
+                    <span>{{ $work }}</span>
+                </div>
+            </x-card>
             @endif
         </div>
     </div>

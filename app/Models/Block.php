@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\CarbonInterface;
+use DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -56,5 +57,17 @@ class Block extends Model
         $this->update([
             'end' => now(),
         ]);
+    }
+
+    public static function sum($blocks)
+    {
+        $end = new DateTime('00:00');
+        $start = clone $end;
+
+        foreach($blocks as $block) {
+            $end->add($block->interval);
+        }
+
+        return $start->diff($end)->format("%H:%I:%S");
     }
 }

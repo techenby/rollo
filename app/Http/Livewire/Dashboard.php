@@ -22,6 +22,7 @@ class Dashboard extends Component
             'currentBlock' => $this->currentBlock,
             'spaces' => $this->spaces,
             'today' => $this->today,
+            'work' => $this->work,
         ]);
     }
 
@@ -52,19 +53,31 @@ class Dashboard extends Component
                 ->append('interval')
                 ->groupBy('activity_id')
                 ->map(function ($collection) {
-                    $dt = new DateTime('00:00');
-                    $final = clone $dt;
-
-                    foreach($collection as $block) {
-                        $dt->add($block->interval);
-                    }
-
                     return [
                         'activity' => $collection->first()->activity,
-                        'duration' => $final->diff($dt)->format("%H:%I:%S"),
+                        'duration' => Block::sum($collection),
                     ];
                 })
                 ->sortByDesc('duration');
+        }
+    }
+
+    public function getWorkProperty()
+    {
+        if ($this->timezone) {
+            $startOfWeek = now()->timezone($this->timezone)->startOfWeek()->timezone('UTC');
+            $endOfWeek = now()->timezone($this->timezone)->endOfWeek()->timezone('UTC');
+
+            $blocks = Block::where('user_id', auth()->id())
+                ->where('start', '>=', $startOfWeek)
+                ->where(function ($query) use ($endOfWeek) {
+                    $query->where('end', '<=', $endOfWeek)
+                        ->orWhereNull('end');
+                })
+                ->where('activity_id', 1)
+                ->get();
+
+            return Block::sum($blocks);
         }
     }
 
