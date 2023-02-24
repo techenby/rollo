@@ -68,6 +68,6 @@ class Block extends Model
             $end->add($block->interval);
         }
 
-        return $start->diff($end)->format("%H:%I:%S");
+        return $start->diff($end)->format("%D:%H:%I:%S");
     }
 }
